@@ -1,13 +1,10 @@
-package com.jari.usermanager.rest;
+package com.example.usermanager.rest;
 
-import com.jari.usermanager.dto.User;
-import com.jari.usermanager.service.UserService;
+import com.example.usermanager.dto.User;
+import com.example.usermanager.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +28,11 @@ public class UserController {
     @GetMapping("/{id}")
     public User getById(@PathVariable long id) {
         return userService.getUserById(id);
+    }
+
+    //NON-RESTFUL ENDPOINTS
+    @PostMapping("/reset-all")
+    public List<User> resetAll() {
+        return userService.resetAllUsers();
     }
 }

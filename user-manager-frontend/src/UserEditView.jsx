@@ -19,12 +19,10 @@ export default function UserEditView({user}) {
       <div>
         <form>
           <EditInputField label={"Name"} user={user} field={"name"} />
-          <EditInputField label={"UserName"} user={user} field={"userName"} />
+          <EditInputField label={"UserName"} user={user} field={"username"} />
           <EditInputField label={"Email"} user={user} field={"email"} />
-          <EditInputField label={"Street"} user={user} field={"street"} />
-          <EditInputField label={"Suite number"} user={user} field={"suite"} />
-          <EditInputField label={"Town"} user={user} field={"town"}/>
-          <EditInputField label={"Zip Code"} user={user} field={"zip"}/>
+          <EditInputField label={"Address"} user={user} field={"address"} />
+          <EditInputField label={"Postal address"} user={user} field={"postalAddress"} />
           <EditInputField label={"Phone Number"} user={user} field={"phone"} />
           <EditInputField label={"Website"} user={user} field={"website"} />
           <EditInputField label={"Company"}user={user} field={"company"} />

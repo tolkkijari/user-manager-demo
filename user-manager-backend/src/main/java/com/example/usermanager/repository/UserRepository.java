@@ -1,6 +1,6 @@
-package com.jari.usermanager.repository;
+package com.example.usermanager.repository;
 
-import com.jari.usermanager.dto.User;
+import com.example.usermanager.dto.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

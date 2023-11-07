@@ -1,4 +1,4 @@
-package com.jari.usermanager.dto;
+package com.example.usermanager.dto;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -10,12 +10,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+    Long originalId;
     String name;
+    String username;
     String email;
-    String street;
-    String suite;
-    String town;
-    String zip;
+    String address;
+    String postalAddress;
     String phone;
     String website;
     String company;

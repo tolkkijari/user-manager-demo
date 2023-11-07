@@ -1,4 +1,4 @@
-package com.jari.usermanager;
+package com.example.usermanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

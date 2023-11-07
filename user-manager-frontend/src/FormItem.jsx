@@ -5,7 +5,7 @@ export default function FormItem() {
     <div>
       <form>
         <InputField label={"Name"} value={""} name={"name"} id={"nameInput"} />
-        <InputField label={"UserName"} value={""} name={"userName"} id={"userNameInput"} />
+        <InputField label={"UserName"} value={""} name={"username"} id={"userNameInput"} />
         <InputField label={"Email"} value={""} name={"email"} id={"emailInput"} />
         <InputField label={"Street"} value={""} name={"street"} id={"streetInput"} />
         <InputField label={"Suite number"} value={""} name={"suite"} id={"suiteInput"} />
