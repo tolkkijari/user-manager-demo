@@ -1,15 +1,9 @@
 package com.example.usermanager.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name="user")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class IncomingFieldsDto {
     private Long originalId;
     private String name;
     private String username;

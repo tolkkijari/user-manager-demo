@@ -6,13 +6,11 @@ export default function UpdateButton() {
 
   const dispatch = useDispatch();
 
-  const reset = () => {
-    dispatch(resetAndFetchUsers());
-  };
+  const reset = () => dispatch(resetAndFetchUsers());
 
   return (
-      <div>
-        <Button onClick={reset} variant="danger">Reset all users</Button>
-      </div>
-    );
+    <div>
+      <Button onClick={reset} variant="danger">Reset all users</Button>
+    </div>
+  );
 }

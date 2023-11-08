@@ -1,6 +1,7 @@
 package com.example.usermanager.mapper;
 
-import com.example.usermanager.dto.RemoteUserDto;
+import com.example.usermanager.dto.IncomingFieldsDto;
+import com.example.usermanager.dto.remoteUser.RemoteUserDto;
 import com.example.usermanager.dto.User;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -14,7 +15,7 @@ public interface UserMapper {
     @Mapping(target = "address", ignore = true)
     @Mapping(target = "postalAddress", ignore = true)
     @Mapping(target = "company", ignore = true)
-    User remoteUserDtotoUser(RemoteUserDto remoteUserDto);
+    User remoteUserDtoToUser(RemoteUserDto remoteUserDto);
 
     @AfterMapping
     default void setAddresses(@MappingTarget User user, RemoteUserDto remoteUserDto) {
@@ -22,4 +23,8 @@ public interface UserMapper {
         user.setPostalAddress(String.format("%s %s", remoteUserDto.getAddress().getZipcode(), remoteUserDto.getAddress().getCity()));
         user.setCompany(remoteUserDto.getCompany().getName());
     }
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "originalId", ignore = true)
+    User incomingFieldsDtoToUser(IncomingFieldsDto incomingFieldsDto);
 }

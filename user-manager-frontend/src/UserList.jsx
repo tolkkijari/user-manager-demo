@@ -1,15 +1,17 @@
-import React from 'react';
-import UserItem from './UserItem.jsx'
-import { useSelector } from 'react-redux';
-import { connect } from "react-redux";
-import { allUsers } from './usersSlice';
+import { useEffect } from 'react';
+import UserListItem from './UserListItem.jsx'
+import { useSelector, useDispatch } from 'react-redux';
+import { userList, fetchUsers } from './usersSlice';
 
 export default function UserList() {
-  const users = useSelector(allUsers);
+  const dispatch = useDispatch();
+  const users = useSelector(userList);
+
+  useEffect(() => { dispatch(fetchUsers())}, []);
 
   return (
       <>
-      {users.map((userObj) => <UserItem key={userObj.id} id={userObj.id} />)}
+      {users.map((userObj) => <UserListItem key={userObj.id} userObj={userObj} />)}
       </>
     );
 }

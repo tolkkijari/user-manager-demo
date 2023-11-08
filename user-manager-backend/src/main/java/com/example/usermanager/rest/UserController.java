@@ -1,5 +1,7 @@
 package com.example.usermanager.rest;
 
+import com.example.usermanager.dto.DeletedUserIdDto;
+import com.example.usermanager.dto.IncomingFieldsDto;
 import com.example.usermanager.dto.User;
 import com.example.usermanager.service.UserService;
 import org.slf4j.Logger;
@@ -22,7 +24,7 @@ public class UserController {
 
     @GetMapping("/")
     public List<User> getAll() {
-        return userService.getAllUsers();
+        return userService.getUserList();
     }
 
     @GetMapping("/{id}")
@@ -30,7 +32,22 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    //NON-RESTFUL ENDPOINTS
+    @PutMapping("/{id}")
+    public User update(@PathVariable long id, @RequestBody IncomingFieldsDto fieldsDto) {
+        return userService.overwriteUserData(id, fieldsDto);
+    }
+
+    @PostMapping("/create")
+    public User create(@RequestBody IncomingFieldsDto fieldsDto) {
+        return userService.createUser(fieldsDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public DeletedUserIdDto delete(@PathVariable long id) {
+        return userService.deleteUser(id);
+    }
+
+    //NON-RESTFUL, BUT STILL NEEDED ENDPOINTS
     @PostMapping("/reset-all")
     public List<User> resetAll() {
         return userService.resetAllUsers();

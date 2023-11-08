@@ -1,6 +1,6 @@
 package com.example.usermanager.external;
 
-import com.example.usermanager.dto.RemoteUserDto;
+import com.example.usermanager.dto.remoteUser.RemoteUserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;

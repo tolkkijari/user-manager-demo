@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { editFieldContent } from './usersSlice';
+import { editFieldContent, editFields } from './usersSlice';
+import Form from 'react-bootstrap/Form';
+import InputField from './InputField';
 
-export default function EditInputField({label, field, user}) {
+export default function EditInputFieldWrapper({label, field, user}) {
 
   const dispatch = useDispatch();
+  const editFieldData = useSelector(editFields);
 
-  //Use the current value as the initial value in the edit field.
   useEffect(() => {
     dispatch(editFieldContent({
-      id: user.id,
       field: field,
       value: user.fields[field]
     }))}, []);
@@ -17,13 +18,12 @@ export default function EditInputField({label, field, user}) {
   function onChange(e) {
     let value = event.target.value;
     dispatch(editFieldContent({
-      id: user.id,
       field: field,
       value: value
     }));
   }
 
   return (
-    <label>{label}: <input onChange={onChange} type="text" value={user.editFields[field] || ''} name={field} id={field} /></label>
+    <InputField value={editFieldData[field] || ''} label={label} onChange={onChange} />
   );
 }

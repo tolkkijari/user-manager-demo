@@ -5,9 +5,7 @@ import Button from 'react-bootstrap/Button';
 export default function UserRenderView({user}) {
   const dispatch = useDispatch();
 
-  const onClick = () => {
-    dispatch(startToEdit(user.id));
-  };
+  const onClick = () => dispatch(startToEdit(user.id));
 
   return (
     <div>
