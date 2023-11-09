@@ -1,12 +1,11 @@
 package com.example.usermanager.mapper;
 
 import com.example.usermanager.dto.IncomingFieldsDto;
+import com.example.usermanager.dto.UserDto;
 import com.example.usermanager.dto.remoteUser.RemoteUserDto;
 import com.example.usermanager.dao.UserDao;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
+import org.owasp.encoder.Encode;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -34,4 +33,20 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "originalId", ignore = true)
     UserDao incomingFieldsDtoToUser(IncomingFieldsDto incomingFieldsDto);
+
+    @Mapping(target = "name", source = "name", qualifiedByName = "encodeHtml")
+    @Mapping(target = "username", source = "username", qualifiedByName = "encodeHtml")
+    @Mapping(target = "email", source = "email", qualifiedByName = "encodeHtml")
+    @Mapping(target = "address", source = "address", qualifiedByName = "encodeHtml")
+    @Mapping(target = "postalAddress", source = "postalAddress", qualifiedByName = "encodeHtml")
+    @Mapping(target = "phone", source = "phone", qualifiedByName = "encodeHtml")
+    @Mapping(target = "website", source = "website", qualifiedByName = "encodeHtml")
+    @Mapping(target = "company", source = "company", qualifiedByName = "encodeHtml")
+    UserDto userToUserDto(UserDao user);
+
+    //Stored HTML injections are mitigated with this, even though React takes good care of by preventing injections.
+    @Named("encodeHtml")
+    public static String encodeHtml(String input) {
+        return Encode.forHtml(input);
+    }
 }

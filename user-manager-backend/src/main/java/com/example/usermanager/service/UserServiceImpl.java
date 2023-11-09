@@ -5,6 +5,7 @@ import com.example.usermanager.db.UserSearch;
 import com.example.usermanager.dto.DeletedUserIdDto;
 import com.example.usermanager.dto.IncomingFieldsDto;
 import com.example.usermanager.dto.SearchDto;
+import com.example.usermanager.dto.UserDto;
 import com.example.usermanager.dto.remoteUser.RemoteUserDto;
 import com.example.usermanager.external.ExternalDataRequester;
 import com.example.usermanager.mapper.UserMapper;
@@ -43,9 +44,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDao getUserById(long id) {
-       return userRepository.findById(id)
+    public UserDto getUserById(long id) {
+       UserDao user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException(String.format("Missing a user with the id %d.", id)));
+       return userMapper.userToUserDto(user);
     }
 
     @Override
@@ -65,28 +67,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<UserDao> getUserList() {
+    public List<UserDto> getUserList() {
         List<UserDao> userDaos = userRepository.findAll();
         if(userDaos.isEmpty()) {
             throw new RuntimeException("Couldn't fetch any users from DB.");
         }
         log.info(String.format("Fetched %d users from DB", userDaos.size()));
-        return userDaos;
+        return userDaos.stream().map(userMapper::userToUserDto).toList();
     }
 
     @Override
     @Transactional
-    public UserDao createUser(IncomingFieldsDto fieldsDto) {
+    public UserDto createUser(IncomingFieldsDto fieldsDto) {
         log.info(String.format("Started to save a new user with this data %s.", fieldsDto));
         UserDao newUserDao = userMapper.incomingFieldsDtoToUser(fieldsDto);
         newUserDao = userRepository.save(newUserDao);
         log.info(String.format("Saved successfully the new user having the id %d.", newUserDao.getId()));
-        return newUserDao;
+        return userMapper.userToUserDto(newUserDao);
     }
 
     @Override
     @Transactional
-    public UserDao overwriteUserData(long id, IncomingFieldsDto fieldsDto) {
+    public UserDto overwriteUserData(long id, IncomingFieldsDto fieldsDto) {
         log.info(String.format("Started to update/overwrite the user having the id %d with this data %s.", id, fieldsDto));
 
         UserDao userDao = userRepository.findById(id).
@@ -98,11 +100,11 @@ public class UserServiceImpl implements UserService {
 
         UserDao savedUserDao = userRepository.save(newUserDao);
         log.info(String.format("Updated the user having the id %d successfully", id));
-        return savedUserDao;
+        return userMapper.userToUserDto(savedUserDao);
     }
 
     @Override
-    public List<UserDao> resetAllUsers() {
+    public List<UserDto> resetAllUsers() {
         log.info("Starting to reset all the users.");
         List<RemoteUserDto> remoteUserDtos = externalDataRequester.requestUsers();
 
@@ -122,12 +124,14 @@ public class UserServiceImpl implements UserService {
         });
         log.info(String.format("Deleted %d old users.", oldCount));
 
-        return transactionTemplate.execute(status -> userRepository.saveAll(userDaos));
+        return transactionTemplate.execute(status -> userRepository.saveAll(userDaos))
+                .stream().map(userMapper::userToUserDto).toList();
     }
 
     @Override
-    public List<UserDao> searchUsers(SearchDto searchDto) {
-        return userSearch.runSearch(searchDto.getFieldName(), searchDto.getSearchText());
+    public List<UserDto> searchUsers(SearchDto searchDto) {
+        return userSearch.runSearch(searchDto.getFieldName(), searchDto.getSearchText())
+                .stream().map(userMapper::userToUserDto).toList();
     }
 
 }
