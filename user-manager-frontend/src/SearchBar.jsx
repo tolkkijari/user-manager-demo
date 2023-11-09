@@ -29,17 +29,20 @@ export default function SearchBar() {
   const searchFieldComponents = Object.keys(searchFields).map(key => <option key={key} value={key}>{searchFields[key]}</option>);
 
   return(
-    <Row>
-      <Col md={2}>
+    <Row style={{marginTop: '30px'}}>
+      <Col lg={{span: 2, offset: 2}}>
         <Form.Label>
           Select search field
+          <Form.Select value={selectedField} onChange={onSelectChange}>
+            {searchFieldComponents}
+          </Form.Select>
         </Form.Label>
-        <Form.Select value={selectedField} onChange={onSelectChange}>
-          {searchFieldComponents}
-        </Form.Select>
       </Col>
-      <Col md={10}>
-        <Form.Control value={searchWord} placeholder="Search" type="text" onChange={onTextChange} />
+      <Col lg={8}>
+        <Form.Label>
+          Write text to search from the selected field
+          <Form.Control value={searchWord} placeholder="Search" type="text" onChange={onTextChange} />
+        </Form.Label>
         <SuggestionDropDown  />
       </Col>
     </Row>

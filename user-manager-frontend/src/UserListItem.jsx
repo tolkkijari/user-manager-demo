@@ -13,11 +13,11 @@ export default function UserListItem({userObj}) {
   const deleteClick = () => dispatch(deleteUser(userObj.id));
 
   return(
-    <Row>
-      <Col sm={9}>
+    <Row style={{marginTop: '10px'}}>
+      <Col xs={4} sm={4} lg={{span: 3, offset: 2}}>
         {userObj.fields.name}
       </Col>
-      <Col sm={2}>
+      <Col xs={4} sm={4} lg={2}>
         <ButtonGroup>
           <Button onClick={showDetails}>
             Show Details
@@ -27,7 +27,7 @@ export default function UserListItem({userObj}) {
           </Button>
         </ButtonGroup>
       </Col>
-      <Col m={1}>
+      <Col xs={4} sm={4} lg={1}>
         <Button variant="danger" onClick={deleteClick}>
           Delete
         </Button>

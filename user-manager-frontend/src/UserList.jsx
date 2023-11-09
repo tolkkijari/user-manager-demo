@@ -10,8 +10,8 @@ export default function UserList() {
   useEffect(() => { dispatch(fetchUsers())}, []);
 
   return (
-      <>
+      <div style={{marginTop: '20px'}}>
       {users.map((userObj) => <UserListItem key={userObj.id} userObj={userObj} />)}
-      </>
+      </div>
     );
 }

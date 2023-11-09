@@ -15,11 +15,11 @@ export default function App() {
       <Container>
         <SearchBar />
         <UserList />
-        <Row>
-          <Col md={2}>
+        <Row style={{marginTop: '30px'}}>
+          <Col xs={6} sm={6} lg={{span: 2, offset: 2}}>
             <AddUserButton />
           </Col>
-          <Col md={2}>
+          <Col xs={6} sm={6} lg={{span: 2, offset: 1}}>
             <UpdateButton />
           </Col>
         </Row>
