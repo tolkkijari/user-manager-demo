@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { isEditModalShown, cancelEditChanges, selectedUser, updateUser, editFields } from './usersSlice';
+import { isEditModalShown, cancelEditChanges, selectedUser, updateUser, editFields } from './appManagerSlice';
 import AppModal from './AppModal';
 import EditInputFieldWrapper from './EditInputFieldWrapper';
 

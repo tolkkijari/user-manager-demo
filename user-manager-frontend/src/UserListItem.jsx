@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { startToEdit, openInfoModal, deleteUser } from './usersSlice';
+import { startToEdit, openInfoModal, deleteUser } from './appManagerSlice';
 
 export default function UserListItem({userObj}) {
   const dispatch = useDispatch();
@@ -13,18 +14,18 @@ export default function UserListItem({userObj}) {
 
   return(
     <Row>
-      <Col sm={8}>
+      <Col sm={9}>
         {userObj.fields.name}
       </Col>
       <Col sm={2}>
-        <Button onClick={showDetails}>
-          Show Details
-        </Button>
-      </Col>
-      <Col m={1}>
-        <Button onClick={edit}>
-          Edit
-        </Button>
+        <ButtonGroup>
+          <Button onClick={showDetails}>
+            Show Details
+          </Button>
+          <Button onClick={edit}>
+            Edit
+          </Button>
+        </ButtonGroup>
       </Col>
       <Col m={1}>
         <Button variant="danger" onClick={deleteClick}>

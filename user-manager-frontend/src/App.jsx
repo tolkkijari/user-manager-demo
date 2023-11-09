@@ -1,4 +1,4 @@
-import React from 'react';
+import SearchBar from './SearchBar.jsx'
 import UserList from './UserList.jsx'
 import UpdateButton from './UpdateButton.jsx'
 import AddUserButton from './AddUserButton.jsx'
@@ -13,6 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function App() {
   return (
       <Container>
+        <SearchBar />
         <UserList />
         <Row>
           <Col md={2}>

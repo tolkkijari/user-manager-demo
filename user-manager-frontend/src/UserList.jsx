@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import UserListItem from './UserListItem.jsx'
 import { useSelector, useDispatch } from 'react-redux';
-import { userList, fetchUsers } from './usersSlice';
+import { userList, fetchUsers } from './appManagerSlice';
 
 export default function UserList() {
   const dispatch = useDispatch();

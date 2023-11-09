@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { editFieldContent, editFields } from './usersSlice';
+import { editFieldContent, editFields } from './appManagerSlice';
 import Form from 'react-bootstrap/Form';
 import InputField from './InputField';
 

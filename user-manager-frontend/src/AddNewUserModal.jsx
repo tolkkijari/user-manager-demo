@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { isAddUserModalShown, cancelAddChanges, createUser, editFields } from './usersSlice';
+import { isAddUserModalShown, cancelAddUser, createUser, editFields } from './appManagerSlice';
 import AppModal from './AppModal';
 import AddNewUserInputFieldWrapper from './AddNewUserInputFieldWrapper';
 
@@ -10,7 +10,7 @@ export default function AddNewUserModal() {
   const showModal = useSelector(isAddUserModalShown);
   const editedFields = useSelector(editFields);
 
-  const hide = () => dispatch(cancelAddChanges());
+  const hide = () => dispatch(cancelAddUser());
   const save = () => dispatch(createUser(editedFields));
 
   return(

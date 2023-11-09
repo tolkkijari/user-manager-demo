@@ -1,8 +1,9 @@
 package com.example.usermanager.rest;
 
+import com.example.usermanager.dao.UserDao;
 import com.example.usermanager.dto.DeletedUserIdDto;
 import com.example.usermanager.dto.IncomingFieldsDto;
-import com.example.usermanager.dto.User;
+import com.example.usermanager.dto.SearchDto;
 import com.example.usermanager.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,22 +24,22 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public List<User> getAll() {
+    public List<UserDao> getAll() {
         return userService.getUserList();
     }
 
     @GetMapping("/{id}")
-    public User getById(@PathVariable long id) {
+    public UserDao getById(@PathVariable long id) {
         return userService.getUserById(id);
     }
 
     @PutMapping("/{id}")
-    public User update(@PathVariable long id, @RequestBody IncomingFieldsDto fieldsDto) {
+    public UserDao update(@PathVariable long id, @RequestBody IncomingFieldsDto fieldsDto) {
         return userService.overwriteUserData(id, fieldsDto);
     }
 
     @PostMapping("/create")
-    public User create(@RequestBody IncomingFieldsDto fieldsDto) {
+    public UserDao create(@RequestBody IncomingFieldsDto fieldsDto) {
         return userService.createUser(fieldsDto);
     }
 
@@ -47,9 +48,15 @@ public class UserController {
         return userService.deleteUser(id);
     }
 
+
     //NON-RESTFUL, BUT STILL NEEDED ENDPOINTS
+    @PostMapping("/search")
+    public List<UserDao> search(@RequestBody SearchDto searchDto) {
+        return userService.searchUsers(searchDto);
+    }
+
     @PostMapping("/reset-all")
-    public List<User> resetAll() {
+    public List<UserDao> resetAll() {
         return userService.resetAllUsers();
     }
 }

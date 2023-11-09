@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
-import { resetAndFetchUsers } from './usersSlice';
+import { resetAndFetchUsers } from './appManagerSlice';
 
 export default function UpdateButton() {
 

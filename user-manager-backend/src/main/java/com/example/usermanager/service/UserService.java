@@ -1,12 +1,14 @@
 package com.example.usermanager.service;
 
+import com.example.usermanager.dao.UserDao;
+import com.example.usermanager.db.UserSearch;
 import com.example.usermanager.dto.DeletedUserIdDto;
 import com.example.usermanager.dto.IncomingFieldsDto;
+import com.example.usermanager.dto.SearchDto;
 import com.example.usermanager.dto.remoteUser.RemoteUserDto;
-import com.example.usermanager.dto.User;
 import com.example.usermanager.external.ExternalDataRequester;
 import com.example.usermanager.mapper.UserMapper;
-import com.example.usermanager.repository.UserRepository;
+import com.example.usermanager.db.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,19 +28,21 @@ public class UserService {
     private TransactionTemplate transactionTemplate;
     private UserRepository userRepository;
     private ExternalDataRequester externalDataRequester;
-    private final UserMapper userMapper;
+    private UserMapper userMapper;
+    private UserSearch userSearch;
 
     public UserService(PlatformTransactionManager transactionManager, UserRepository userRepository,
                        ExternalDataRequester externalDataRequester,
-                       UserMapper userMapper) {
+                       UserMapper userMapper, UserSearch userSearch) {
         this.transactionTemplate = new TransactionTemplate(transactionManager);
         this.userRepository = userRepository;
         this.externalDataRequester = externalDataRequester;
         this.userMapper = userMapper;
+        this.userSearch = userSearch;
     }
 
     @Transactional
-    public User getUserById(long id) {
+    public UserDao getUserById(long id) {
        return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException(String.format("Missing a user with the id %d.", id)));
     }
@@ -58,41 +62,41 @@ public class UserService {
     }
 
     @Transactional
-    public List<User> getUserList() {
-        List<User> users = userRepository.findAll();
-        if(users.isEmpty()) {
+    public List<UserDao> getUserList() {
+        List<UserDao> userDaos = userRepository.findAll();
+        if(userDaos.isEmpty()) {
             throw new RuntimeException("Couldn't fetch any users from DB.");
         }
-        log.info(String.format("Fetched %d users from DB", users.size()));
-        return users;
+        log.info(String.format("Fetched %d users from DB", userDaos.size()));
+        return userDaos;
     }
 
     @Transactional
-    public User createUser(IncomingFieldsDto fieldsDto) {
+    public UserDao createUser(IncomingFieldsDto fieldsDto) {
         log.info(String.format("Started to save a new user with this data %s.", fieldsDto));
-        User newUser = userMapper.incomingFieldsDtoToUser(fieldsDto);
-        newUser = userRepository.save(newUser);
-        log.info(String.format("Saved successfully the new user having the id %d.", newUser.getId()));
-        return newUser;
+        UserDao newUserDao = userMapper.incomingFieldsDtoToUser(fieldsDto);
+        newUserDao = userRepository.save(newUserDao);
+        log.info(String.format("Saved successfully the new user having the id %d.", newUserDao.getId()));
+        return newUserDao;
     }
 
     @Transactional
-    public User overwriteUserData(long id, IncomingFieldsDto fieldsDto) {
+    public UserDao overwriteUserData(long id, IncomingFieldsDto fieldsDto) {
         log.info(String.format("Started to update/overwrite the user having the id %d with this data %s.", id, fieldsDto));
 
-        User user = userRepository.findById(id).
+        UserDao userDao = userRepository.findById(id).
                 orElseThrow(() -> new RuntimeException(String.format("Missing a user with the id %d, can't delete.", id)));
 
-        User newUser = userMapper.incomingFieldsDtoToUser(fieldsDto);
-        newUser.setId(user.getId());
-        newUser.setOriginalId(user.getOriginalId());
+        UserDao newUserDao = userMapper.incomingFieldsDtoToUser(fieldsDto);
+        newUserDao.setId(userDao.getId());
+        newUserDao.setOriginalId(userDao.getOriginalId());
 
-        User savedUser = userRepository.save(newUser);
+        UserDao savedUserDao = userRepository.save(newUserDao);
         log.info(String.format("Updated the user having the id %d successfully", id));
-        return savedUser;
+        return savedUserDao;
     }
 
-    public List<User> resetAllUsers() {
+    public List<UserDao> resetAllUsers() {
         log.info("Starting to reset all the users.");
         List<RemoteUserDto> remoteUserDtos = externalDataRequester.requestUsers();
 
@@ -101,8 +105,8 @@ public class UserService {
         }
         log.info(String.format("Got %d users from the remote server.", remoteUserDtos.size()));
 
-        List<User> users = remoteUserDtos.stream().map(userMapper::remoteUserDtoToUser).toList();
-        long oldCount = users.size();
+        List<UserDao> userDaos = remoteUserDtos.stream().map(userMapper::remoteUserDtoToUser).toList();
+        long oldCount = userDaos.size();
         //Better to not run HTTP requests in a @Transactional method to not overwhelm the db connection pool.
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
@@ -112,6 +116,11 @@ public class UserService {
         });
         log.info(String.format("Deleted %d old users.", oldCount));
 
-        return transactionTemplate.execute(status -> userRepository.saveAll(users));
+        return transactionTemplate.execute(status -> userRepository.saveAll(userDaos));
     }
+
+    public List<UserDao> searchUsers(SearchDto searchDto) {
+        return userSearch.runSearch(searchDto.getFieldName(), searchDto.getSearchText());
+    }
+
 }

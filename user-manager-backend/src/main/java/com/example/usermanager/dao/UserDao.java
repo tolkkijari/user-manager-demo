@@ -1,4 +1,4 @@
-package com.example.usermanager.dto;
+package com.example.usermanager.dao;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="user")
-public class User {
+public class UserDao {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

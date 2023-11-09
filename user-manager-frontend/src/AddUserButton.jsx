@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
-import { openAddUserModal } from './usersSlice';
+import { openAddUserModal } from './appManagerSlice';
 
 export default function AddUserButton() {
 
