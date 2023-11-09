@@ -1,10 +1,10 @@
-import SearchBar from './SearchBar.jsx'
-import UserList from './UserList.jsx'
-import UpdateButton from './UpdateButton.jsx'
-import AddUserButton from './AddUserButton.jsx'
-import EditModal from './EditModal.jsx'
-import InfoModal from './InfoModal.jsx'
-import AddNewUserModal from './AddNewUserModal.jsx'
+import SearchBar from './search/SearchBar.jsx'
+import UserList from './userlist/UserList.jsx'
+import UpdateButton from './buttons/UpdateButton.jsx'
+import AddUserButton from './buttons/AddUserButton.jsx'
+import EditModal from './modals/EditModal.jsx'
+import InfoModal from './modals/InfoModal.jsx'
+import AddNewUserModal from './modals/AddNewUserModal.jsx'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -15,7 +15,7 @@ export default function App() {
       <Container>
         <SearchBar />
         <UserList />
-        <Row style={{marginTop: '30px'}}>
+        <Row style={{marginTop: '30px', marginBottom: '30px'}}>
           <Col xs={6} sm={6} lg={{span: 2, offset: 2}}>
             <AddUserButton />
           </Col>

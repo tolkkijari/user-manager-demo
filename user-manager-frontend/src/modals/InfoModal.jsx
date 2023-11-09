@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { isInfoModalShown, closeInfoModal, selectedUser } from './appManagerSlice';
+import { isInfoModalShown, closeInfoModal, selectedUser } from '../state/appManagerSlice';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import TableRow from './TableRow';

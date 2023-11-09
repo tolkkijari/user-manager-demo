@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { startToEdit, openInfoModal, deleteUser } from './appManagerSlice';
+import { startToEdit, openInfoModal, deleteUser } from '../state/appManagerSlice';
 
 export default function UserListItem({userObj}) {
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { startToEdit } from './appManagerSlice';
+import { startToEdit } from '../state/appManagerSlice';
 import Button from 'react-bootstrap/Button';
 
 export default function UserRenderView({user}) {

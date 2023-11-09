@@ -1,6 +1,6 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { isSuggestionListShown, suggestions, selectedSearchField, openInfoModal } from './appManagerSlice';
+import { isSuggestionListShown, suggestions, selectedSearchField, openInfoModal } from '../state/appManagerSlice';
 
 export default function SuggestionDropDown() {
 

@@ -2,7 +2,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import SuggestionDropDown from './SuggestionDropDown';
-import { searchFields, selectedSearchField, changeSearchField, changeSearchText, runSearch, searchTerm } from './appManagerSlice';
+import { searchFields, selectedSearchField, changeSearchField, changeSearchText, runSearch, searchTerm } from '../state/appManagerSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 export default function SearchBar() {
@@ -30,7 +30,7 @@ export default function SearchBar() {
 
   return(
     <Row style={{marginTop: '30px'}}>
-      <Col lg={{span: 2, offset: 2}}>
+      <Col sm={4} lg={{span: 2, offset: 2}}>
         <Form.Label>
           Select search field
           <Form.Select value={selectedField} onChange={onSelectChange}>
@@ -38,7 +38,7 @@ export default function SearchBar() {
           </Form.Select>
         </Form.Label>
       </Col>
-      <Col lg={8}>
+      <Col sm={8} lg={8}>
         <Form.Label>
           Write text to search from the selected field
           <Form.Control value={searchWord} placeholder="Search" type="text" onChange={onTextChange} />

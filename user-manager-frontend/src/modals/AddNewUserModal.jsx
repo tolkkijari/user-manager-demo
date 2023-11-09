@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { isAddUserModalShown, cancelAddUser, createUser, editFields } from './appManagerSlice';
+import { isAddUserModalShown, cancelAddUser, createUser, editFields } from '../state/appManagerSlice';
 import AppModal from './AppModal';
 import AddNewUserInputFieldWrapper from './AddNewUserInputFieldWrapper';
 
