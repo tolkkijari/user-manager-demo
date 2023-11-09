@@ -11,6 +11,7 @@ import org.owasp.encoder.Encode;
 public interface UserMapper {
 
     @Mapping(target = "originalId", source = "id")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "address", ignore = true)
     @Mapping(target = "postalAddress", ignore = true)
     @Mapping(target = "company", ignore = true)
