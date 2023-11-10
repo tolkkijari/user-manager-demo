@@ -24,7 +24,7 @@ public interface UserService {
     @Transactional
     UserDto overwriteUserData(long id, IncomingFieldsDto fieldsDto);
 
-    List<UserDto> resetAllUsers();
+    String resetAllUsers();
 
     List<UserDto> searchUsers(SearchDto searchDto);
 }

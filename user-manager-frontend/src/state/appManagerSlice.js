@@ -29,14 +29,6 @@ const REMOTE_URL = 'http://localhost:8080/api/users';
 export const searchFields = {name: 'Name', username: 'Username', email: 'Email', address: 'Address',
   postalAddress: 'Postal address', phone: 'Phone', website: 'Website', company: 'Company'};
 
-export const resetAndFetchUsers = createAsyncThunk('/reset', async () => {
-  const response = await fetch(REMOTE_URL + '/reset-all', {
-    method: 'POST',
-    cache: 'no-cache'
-  });
-  return await response.json();
-});
-
 export const fetchUsers = createAsyncThunk('/getAll', async () => {
   const response = await fetch(REMOTE_URL + '/', {
     method: 'GET',
@@ -248,21 +240,6 @@ export const appManagerSlice = createSlice({
     }
   },
   extraReducers: {
-    [resetAndFetchUsers.pending]: (state, action) => {
-      state.status = 'loading';
-    },
-    [resetAndFetchUsers.fulfilled]: (state, action) => {
-      let users = [];
-      if(Array.isArray(action.payload)) {
-        users = action.payload.map(u => mapIncomingUser(u));
-      }
-      state.status = 'succeeded';
-      state.userList = users;
-    },
-    [resetAndFetchUsers.rejected]: (state, action) => {
-      state.status = 'failed';
-      state.error = action.error.message;
-    },
     [fetchUsers.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;

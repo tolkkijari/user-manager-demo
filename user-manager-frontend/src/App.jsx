@@ -1,6 +1,5 @@
 import SearchBar from './search/SearchBar.jsx'
 import UserList from './userlist/UserList.jsx'
-import UpdateButton from './buttons/UpdateButton.jsx'
 import AddUserButton from './buttons/AddUserButton.jsx'
 import EditModal from './modals/EditModal.jsx'
 import InfoModal from './modals/InfoModal.jsx'
@@ -18,9 +17,6 @@ export default function App() {
         <Row style={{marginTop: '30px', marginBottom: '30px'}}>
           <Col xs={6} sm={6} lg={{span: 2, offset: 2}}>
             <AddUserButton />
-          </Col>
-          <Col xs={6} sm={6} lg={{span: 2, offset: 1}}>
-            <UpdateButton />
           </Col>
         </Row>
         <EditModal />

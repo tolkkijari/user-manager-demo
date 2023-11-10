@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @PostMapping("/reset-all")
-    public List<UserDto> resetAll() {
+    public String resetAll() {
         return userService.resetAllUsers();
     }
 }

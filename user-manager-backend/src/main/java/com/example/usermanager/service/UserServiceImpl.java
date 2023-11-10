@@ -69,9 +69,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public List<UserDto> getUserList() {
         List<UserDao> userDaos = userRepository.findAll();
-        if(userDaos.isEmpty()) {
-            throw new RuntimeException("Couldn't fetch any users from DB.");
-        }
         log.info(String.format("Fetched %d users from DB", userDaos.size()));
         return userDaos.stream().map(userMapper::userToUserDto).toList();
     }
@@ -104,7 +101,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> resetAllUsers() {
+    public String resetAllUsers() {
         log.info("Starting to reset all the users.");
         List<RemoteUserDto> remoteUserDtos = externalDataRequester.requestUsers();
 
@@ -124,8 +121,8 @@ public class UserServiceImpl implements UserService {
         });
         log.info(String.format("Deleted %d old users.", oldCount));
 
-        return transactionTemplate.execute(status -> userRepository.saveAll(userDaos))
-                .stream().map(userMapper::userToUserDto).toList();
+        transactionTemplate.execute(status -> userRepository.saveAll(userDaos));
+        return "Database reset successful.\n";
     }
 
     @Override
